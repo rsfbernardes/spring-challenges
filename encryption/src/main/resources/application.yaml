@@ -1,26 +1,25 @@
+server:
+  port: 8080
+
 spring:
-  port: 8082
   servlet:
     context-path: '/encryption'
 
   datasource:
-    url: jdbc:h2:mem:encryption
-    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:/home/tqi_rbernardes/Documents/Estudos/bd-files/encryption;DB_CLOSE_DELAY=-1;IFEXISTS=FALSE
     username: sa
-    password:
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-      dialect: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
-    properties:
-      hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true
-    database-platform: org.hibernate.dialect.H2Dialect
+    password: sa
+    driverClassName: org.h2.Driver
 
   h2:
     console:
       enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true

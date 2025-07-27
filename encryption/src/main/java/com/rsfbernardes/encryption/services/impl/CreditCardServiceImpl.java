@@ -15,6 +15,7 @@ import java.util.Optional;
 public class CreditCardServiceImpl implements CreditCardService {
 
     private final CreditCardRepository creditCardRepository;
+    private final Pbkdf2PasswordEncoderServiceImpl passwordEncoderService;
 
     @Override
     public Optional<CreditCard> findById(Long id) {
@@ -26,6 +27,10 @@ public class CreditCardServiceImpl implements CreditCardService {
     public void create(CreditCardDto creditCardDto) {
         CreditCard creditCard = new CreditCard();
         BeanUtils.copyProperties(creditCardDto, creditCard);
+        String encryptedDocument = passwordEncoderService.encoder.encode(creditCard.getUserDocument());
+        String encryptedToken = passwordEncoderService.encoder.encode(creditCard.getCreditCardToken());
+        creditCard.setUserDocument(encryptedDocument);
+        creditCard.setCreditCardToken(encryptedToken);
         creditCardRepository.save(creditCard);
     }
 
